@@ -1,0 +1,86 @@
+set-option -g default-terminal "screen-256color"
+set-option -g mouse-select-pane on
+set-option -g status-keys vi
+set-window-option -g mode-keys vi
+#set-window-option -g mode-mouse on
+set-window-option -g utf8 on
+set-window-option -g window-status-current-bg red
+set -g base-index 1
+set -s escape-time 0
+setw -g aggressive-resize on
+
+# Example of using a shell command in the status line
+#set -g status-right "#[fg=yellow]#(uptime | cut -d ',' -f 2-)"
+
+bind s split-window -v
+bind v split-window -h
+
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# metakey to control-spacebar
+set -g prefix C-@  
+unbind C-b
+bind C-@ send-prefix
+
+bind < resize-pane -L 5
+bind > resize-pane -R 5
+bind - resize-pane -D 5
+bind + resize-pane -U 5
+
+# open urls with u
+#bind-key u capture-pane \; save-buffer /tmp/tmux-buffer \; run-shell "$SHELL -e 'cat /tmp/tmux-buffer | urlview'"
+#bind-key u capture-pane \; save-buffer /tmp/tmux-buffer \; run-shell "cat /tmp/tmux-buffer |urlview"
+#bind-key u capture-pane \; save-buffer /tmp/tmux-buffer \; run-shell "cat /tmp/tmux-buffer |urlview"
+#bind-key u capture-pane \; command-prompt "show-buffer -b 0 | urlview"
+bind-key u run-shell 'tmux show-buffer |urlview'
+
+# rejoin last broken pane to family
+bind z join-pane -t !
+
+# screen-like mappings ---------------------------------------------------
+
+bind A command-prompt "rename-window '%%'"
+# toggle last window like screen
+bind-key C-@ last-window
+
+# statusbar --------------------------------------------------------------
+
+# Show messages and notifications for 2 seconds.
+set-option -g display-time 2000
+
+# Refresh the status bar every 1 second.
+set-option -g status-interval 2
+
+# The status bar itself.
+set-option -g status-left "[#I]"
+# set-option -g status-right "#(uptime)"
+set-option -g status-right "#(date +'%Y-%m-%d %H:%M')"
+
+# default statusbar colors
+set-option -g status-fg white
+#set-option -g status-bg default
+set-option -g status-bg black
+set-option -g status-attr default
+
+# default window title colors
+set-window-option -g window-status-fg cyan
+set-window-option -g window-status-bg default
+set-window-option -g window-status-attr dim
+
+# active window title colors
+set-window-option -g window-status-current-fg white
+#set-window-option -g window-status-current-bg default
+set-window-option -g window-status-current-bg red
+set-window-option -g window-status-current-attr bright
+
+# command/message line colors
+set-option -g message-fg white
+set-option -g message-bg black
+set-option -g message-attr bright
+
+# reload config
+bind r source-file ~/.tmux.conf
+
