@@ -32,7 +32,7 @@ if node[:lsb][:codename] == 'lucid'
 end
 
 package 'tmux' do
-  action :install
+  action :upgrade
 end
 
 template '/etc/tmux.conf' do
