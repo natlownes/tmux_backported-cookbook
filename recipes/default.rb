@@ -19,17 +19,19 @@
 ubuntu_backportables = ['lucid', 'natty']
 
 ubuntu_backportables.each do |codename|
-  apt_repository 'lucid-backports' do
-    uri "http://archive.ubuntu.com/ubuntu" 
-    distribution "#{codename}-backports"
-    components %w(main restricted universe multiverse)
-  end
+  if node[:lsb][:codename] == codename
+    apt_repository 'lucid-backports' do
+      uri "http://archive.ubuntu.com/ubuntu" 
+      distribution "#{codename}-backports"
+      components %w(main restricted universe multiverse)
+    end
 
-  apt_preference 'tmux' do
-    pin 'version 1.5*'
-    pin_priority '990'
+    apt_preference 'tmux' do
+      pin 'version 1.5*'
+      pin_priority '990'
 
-    notifies :run, "execute[apt-get update]", :immediately
+      notifies :run, "execute[apt-get update]", :immediately
+    end
   end
 end
 
