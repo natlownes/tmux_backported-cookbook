@@ -16,10 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-if node[:lsb][:codename] == 'lucid'
+ubuntu_backportables = ['lucid', 'natty']
+
+ubuntu_backportables.each do |codename|
   apt_repository 'lucid-backports' do
     uri "http://archive.ubuntu.com/ubuntu" 
-    distribution 'lucid-backports'
+    distribution "#{codename}-backports"
     components %w(main restricted universe multiverse)
   end
 
