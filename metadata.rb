@@ -1,3 +1,4 @@
+name             "tmux_backported"
 maintainer       "Nat Lownes"
 maintainer_email "nat.lownes@gmail.com"
 license          "BSD"
